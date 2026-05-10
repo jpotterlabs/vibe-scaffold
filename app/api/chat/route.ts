@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { getModel } from "@/app/utils/ai";
 import { streamText, generateText } from "ai";
 import { spikelog } from "@/app/utils/spikelog";
 
@@ -39,12 +39,12 @@ export async function POST(req: Request) {
     });
     console.log("\n" + "=".repeat(80) + "\n");
 
-    const modelName = process.env.OPENAI_MODEL || "gpt-4o";
-    console.log(`🔧 Using model: ${modelName}\n`);
+    const modelName = process.env.OPENAI_MODEL;
+    const model = getModel(modelName);
 
     if (stream) {
       const result = streamText({
-        model: openai(modelName),
+        model,
         system: fullSystemPrompt,
         messages,
       });
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     }
 
     const result = await generateText({
-      model: openai(modelName),
+      model,
       system: fullSystemPrompt,
       messages,
     });

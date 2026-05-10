@@ -123,11 +123,12 @@ if (config.documentInputs.length > 0) {
 ```
 **Important**: Empty string values are NOT passed (only non-null documents).
 
-### Model & API Configuration
-- Uses OpenAI models via the Vercel AI SDK (`@ai-sdk/openai`)
-- Model configured via `OPENAI_MODEL` environment variable (defaults to `gpt-4o`)
-- Both API routes use **Edge Runtime** (not Node.js)
-- Requires `OPENAI_API_KEY` in `.env.local`
+### Model & Provider Configuration
+- Uses multiple AI providers via `app/utils/ai.ts` and the Vercel AI SDK.
+- **`AI_PROVIDER`**: "openai" (default), "openrouter", "ollama", "anthropic", or "custom".
+- **`OPENAI_MODEL`**: Model name (e.g., `gpt-4o`, `llama3.1`).
+- Both API routes use **Edge Runtime** (not Node.js).
+- Requires relevant API keys (`OPENAI_API_KEY`, `OPENROUTER_API_KEY`, etc.) in `.env.local`.
 
 ### Component Hierarchy
 ```
